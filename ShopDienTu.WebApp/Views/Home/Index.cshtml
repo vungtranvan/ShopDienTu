@@ -1,0 +1,93 @@
+﻿@model HomeViewModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
+@{
+    ViewData["Title"] = "Trang Chủ";
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+@section silder{
+    @if (Model.Slides.Count > 0)
+    {
+        <div id="carouselBlk">
+            <div id="myCarousel" class="carousel slide">
+                <div class="carousel-inner">
+
+                    @for (int index = 0; index < Model.Slides.Count; index++)
+                    {
+                        var item = Model.Slides[index];
+                        <div class="item @(index == 0 ? "active" : "")">
+                            <div class="container">
+                                <a href="@item.Url"><img style="width:100%" src="@item.Image" alt="@item.Name" /></a>
+                                <div class="carousel-caption">
+                                    <h4>@item.Name</h4>
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+        </div>
+    }
+}
+
+<div class="well well-small">
+    @if (Model.FeaturedProducts.Count > 0)
+    {
+        <h4><localize>Featured Products</localize> <small class="pull-right">@Model.FeaturedProducts.Count+ <localize>Featured Products</localize></small></h4>
+        <div class="row-fluid">
+            <div id="featured" class="carousel slide">
+                <div class="carousel-inner">
+
+                    <div class="item active">
+                        <ul class="thumbnails">
+                            @foreach (var item in Model.FeaturedProducts)
+                            {
+                                var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}/{item.SeoAlias}";
+                                <li class="span3">
+                                    <div class="thumbnail">
+                                        <i class="tag"></i>
+                                        <a href="@url"><img src="@item.ThumbnailImage" alt="@item.Name"></a>
+                                        <div class="caption">
+                                            <h5>@item.Name</h5>
+                                            <h4><a class="btn" href="@url" localize-content>VIEW</a> <span class="pull-right">$@item.Price.ToString()</span></h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (Model.LatestProducts.Count > 0)
+{
+    <h4 localize-content>Latest Products</h4>
+    <ul class="thumbnails">
+        @foreach (var item in Model.LatestProducts)
+        {
+            var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}/{item.SeoAlias}";
+            <li class="span3">
+                <div class="thumbnail">
+                    <a href="@url"><img src="@item.ThumbnailImage" alt="@item.Name" /></a>
+                    <div class="caption">
+                        <h5>@item.Name</h5>
+                        <p>
+                            @item.Description
+                        </p>
+                        <h4 style="text-align:center">
+                            <a class="btn" href="@url"> <i class="icon-zoom-in"></i></a>
+                            <a class="btn btn-add-cart" data-id="@item.Id" href="#"><localize>Add to</localize> <i class="icon-shopping-cart"></i></a>
+                            <a class="btn btn-primary" href="#">$@item.Price.ToString()</a>
+                        </h4>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}

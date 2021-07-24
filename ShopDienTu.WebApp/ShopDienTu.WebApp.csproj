@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\app\themes\less\oregional\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
+    <PackageReference Include="LazZiya.TagHelpers" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="toastr" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopDienTu.ApiIntegration\ShopDienTu.ApiIntegration.csproj" />
+    <ProjectReference Include="..\ShopDienTu.Data\ShopDienTu.Data.csproj" />
+    <ProjectReference Include="..\ShopDienTu.Utilities\ShopDienTu.Utilities.csproj" />
+    <ProjectReference Include="..\ShopDienTu.ViewModels\ShopDienTu.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

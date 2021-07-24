@@ -1,0 +1,165 @@
+﻿@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link id="callCss" rel="stylesheet" href="/app/themes/bootshop/bootstrap.min.css" media="screen" />
+    <link href="/app/themes/css/base.css" rel="stylesheet" media="screen" />
+    <!-- Bootstrap style responsive -->
+    <link href="/app/themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/app/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/css/toastr.min.css" rel="stylesheet" />
+    <!-- Google-code-prettify -->
+    <link href="/app/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="/app/themes/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/app/themes/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/app/themes/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/app/themes/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/app/themes/images/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css" id="enject"></style>
+</head>
+<body>
+    <input type="hidden" id="hideCulture" value="@culture" />
+    <div id="header">
+        <div class="container">
+            <div id="welcomeLine" class="row">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="span6">Welcome!<strong> @User.Identity.Name</strong></div>
+                }
+                else
+                {
+                    <div class="span6">Welcome!<strong> Guest!</strong></div>
+                }
+                <div class="span6">
+                    <div class="pull-right">
+                        <a href="/en/Home/SetCultureCookie?cltr=vi&amp;returnUrl=/en"><span class="">English</span></a>
+                        <a href="/vi/Home/SetCultureCookie?cltr=vi&amp;returnUrl=/vi"><span class="">Tiếng Việt</span></a>
+
+                        @*<language-nav language-label="NativeName"
+                                          cookie-handler-url="@(Url.Action("SetCultureCookie", "Home", new { area= "", cltr="{0}", returnUrl="{1}" }))">
+                            </language-nav>*@
+
+                        <a href="/@culture/cart">
+                            <span class="btn btn-mini btn-primary">
+                                <i class="icon-shopping-cart icon-white"></i> [ <span class="lbl_number_of_items">0</span> ] Itemes in your cart
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Navbar ================================================== -->
+            <div id="logoArea" class="navbar">
+                <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-inner">
+                    <a class="brand" href="/"><img src="/app/themes/images/logo.png" alt="Bootsshop" /></a>
+                    <form class="form-inline navbar-search" method="post" action="products.html">
+                        <input id="srchFld" class="srchTxt" type="text" />
+                        <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+                    </form>
+                    <ul id="topMenu" class="nav pull-right">
+                        <li class=""><a asp-route-culture="@culture" localize-content>Specials Offer</a></li>
+                        <li class=""><a asp-route-culture="@culture" localize-content>Delivery</a></li>
+                        <li class=""><a asp-route-culture="@culture" localize-content>Contact</a></li>
+                        <li class="">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form action="/@culture/Account/Logout" method="post">
+                                    <button type="submit" style="padding-right:0;margin-top:10px;margin-bottom:0px;background:transparent;border:none;">
+                                        <span class="btn btn-large btn-success"><localize>Logout</localize></span>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a href="/@culture/Account/Login" style="padding-right:0">
+                                    <span class="btn btn-large btn-success"><localize>Login</localize></span>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End====================================================================== -->
+    @RenderSection("silder", required: false)
+    <div id="mainBody">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar ================================================== -->
+                @await Component.InvokeAsync("SideBar")
+
+                <!-- Sidebar end=============================================== -->
+                <div class="span9">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer ================================================================== -->
+    <div id="footerSection">
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <h5>ACCOUNT</h5>
+                    <a href="login.html">YOUR ACCOUNT</a>
+                    <a href="login.html">PERSONAL INFORMATION</a>
+                    <a href="login.html">ADDRESSES</a>
+                    <a href="login.html">DISCOUNT</a>
+                    <a href="login.html">ORDER HISTORY</a>
+                </div>
+                <div class="span3">
+                    <h5>INFORMATION</h5>
+                    <a href="contact.html">CONTACT</a>
+                    <a href="register.html">REGISTRATION</a>
+                    <a href="legal_notice.html">LEGAL NOTICE</a>
+                    <a href="tac.html">TERMS AND CONDITIONS</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+                <div class="span3">
+                    <h5>OUR OFFERS</h5>
+                    <a href="#">NEW PRODUCTS</a>
+                    <a href="#">TOP SELLERS</a>
+                    <a href="special_offer.html">SPECIAL OFFERS</a>
+                    <a href="#">MANUFACTURERS</a>
+                    <a href="#">SUPPLIERS</a>
+                </div>
+                <div id="socialMedia" class="span3 pull-right">
+                    <h5>SOCIAL MEDIA </h5>
+                    <a href="#"><img width="60" height="60" src="/app/themes/images/facebook.png" title="facebook" alt="facebook" /></a>
+                    <a href="#"><img width="60" height="60" src="/app/themes/images/twitter.png" title="twitter" alt="twitter" /></a>
+                    <a href="#"><img width="60" height="60" src="/app/themes/images/youtube.png" title="youtube" alt="youtube" /></a>
+                </div>
+            </div>
+            <p class="pull-right">&copy; Bootshop</p>
+        </div><!-- Container End -->
+    </div>
+    <!-- Placed at the end of the document so the pages load faster ============================================= -->
+    <script src="/app/themes/js/jquery.js" type="text/javascript"></script>
+    <script src="/app/themes/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/app/themes/js/google-code-prettify/prettify.js"></script>
+    <script src="/app/themes/js/bootshop.js"></script>
+    <script src="/app/themes/js/jquery.lightbox-0.5.js"></script>
+    <script src="/js/toastr.min.js"></script>
+    <script src="/js/configToastr.js"></script>
+    <script src="/js/site.js"></script>
+    <script>
+        var site = new SiteController();
+        site.initialize();
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

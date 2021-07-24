@@ -1,0 +1,35 @@
+﻿
+@model List<ShopDienTu.ViewModels.Catalog.Categories.CategoryVm>
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+<div id="sidebar" class="span3">
+    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+        @{
+            var parents = Model.Where(x => x.ParentId == null);
+        }
+        @for (var index = 0; index < parents.Count(); index ++)
+        {
+            var parent = parents.ElementAt(index);
+            var childent = Model.Where(x => x.ParentId == parent.Id);
+            if (childent.Any())
+            {
+                <li class="subMenu open">
+                    <a> @parent.Name</a>
+                    <ul>
+                        @foreach (var item in childent)
+                        {
+                            <li><a class="active" href="/@culture/@_loc["categoryUrl"]/@item.Id/@item.SeoAlias"><i class="icon-chevron-right"></i>@item.Name</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li><a href="/@culture/@_loc["categoryUrl"]/@parent.Id/@parent.SeoAlias">@parent.Name</a></li>
+            }
+        }
+
+    </ul>
+</div>

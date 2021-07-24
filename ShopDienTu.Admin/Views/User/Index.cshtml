@@ -1,0 +1,116 @@
+﻿@using ShopDienTu.ViewModels.Common
+@model PagedResult<ShopDienTu.ViewModels.System.Users.UserVm>
+
+@{
+    ViewBag.Title = "Quản lý danh sách tài khoản quản trị";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <form asp-action="Index" method="get">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                        </div>
+                        <div class="cold-md-3">
+                            <button type="submit" class="btn btn-primary">Tìm</button>
+                            <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Items.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        STT
+                                    </th>
+                                    <th>
+                                        Tên
+                                    </th>
+                                    <th>
+                                        Họ
+                                    </th>
+                                    <th>
+                                        Số điện thoại
+                                    </th>
+                                    <th>
+                                        Tài khoản
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Model.Items.IndexOf(item)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Sửa", "Update", new { id = item.Id }) |
+                                            @Html.ActionLink("Chi Tiết", "Details", new { id = item.Id })|
+                                            @Html.ActionLink("Xóa", "Delete", new { id = item.Id })|
+                                            @Html.ActionLink("Gán quyền", "RoleAssign", new { id = item.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @await Component.InvokeAsync("Paged", Model)
+                }
+                else
+                {
+                    <p class="text-center">Ko có bản ghi nào</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}

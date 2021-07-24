@@ -1,0 +1,78 @@
+﻿@model ShopDienTu.ViewModels.Catalog.Categories.CategoryVm
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card-header">
+                <a class="btn btn-success" asp-action="Index" asp-controller="Category">Về trang Danh sách</a>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="LanguageId" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.LanguageId, (SelectList)ViewBag.Languages, new { @class = "form-control" })
+                        <span asp-validation-for="LanguageId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SeoDescription" class="control-label"></label>
+                        <input asp-for="SeoDescription" class="form-control" />
+                        <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SeoTitle" class="control-label"></label>
+                        <input asp-for="SeoTitle" class="form-control" />
+                        <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SeoAlias" class="control-label"></label>
+                        <input asp-for="SeoAlias" class="form-control" />
+                        <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ParentId" class="control-label"></label>
+                        <input asp-for="ParentId" type="number" class="form-control" />
+                        <span asp-validation-for="ParentId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SortOrder" class="control-label"></label>
+                        <input asp-for="SortOrder" class="form-control" />
+                        <span asp-validation-for="SortOrder" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        @Html.EditorFor(x => x.Status)
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IsShowOnHome" class="control-label"></label>
+                        @Html.EditorFor(x => x.IsShowOnHome)
+                        <span asp-validation-for="IsShowOnHome" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

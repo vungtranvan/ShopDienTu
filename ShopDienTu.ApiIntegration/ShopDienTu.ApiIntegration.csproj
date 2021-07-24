@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopDienTu.Application\ShopDienTu.Application.csproj" />
+    <ProjectReference Include="..\ShopDienTu.Data\ShopDienTu.Data.csproj" />
+    <ProjectReference Include="..\ShopDienTu.Utilities\ShopDienTu.Utilities.csproj" />
+    <ProjectReference Include="..\ShopDienTu.ViewModels\ShopDienTu.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

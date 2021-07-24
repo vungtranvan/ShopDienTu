@@ -1,0 +1,125 @@
+﻿@using ShopDienTu.ViewModels.Common;
+@using ShopDienTu.Utilities.Enum;
+@model PagedResult<ShopDienTu.ViewModels.Catalog.Categories.CategoryVm>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-xs-12">
+                <a class="btn btn-success" asp-action="Create" asp-controller="Category">Tạo mới</a>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <form asp-action="Index" method="get">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                        </div>
+                        <div class="cold-md-3">
+                            <button type="submit" class="btn btn-primary">Tìm</button>
+                            <button type="button" onclick="window.location.href='/Category/Index'" class="btn btn-dark">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+
+        </div>
+        <br>
+        <div class="row">
+            @if (Model.Items.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    STT
+                                </th>
+                                <th>
+                                    Mã Danh Mục
+                                </th>
+                                <th>
+                                    Mã Ngôn Ngữ
+                                </th>
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Trạng Thái
+                                </th>
+                                <th>
+                                    Hiển thị Trang Chủ
+                                </th>
+                                <th>
+                                    Sắp xếp
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @(Model.Items.IndexOf(item)+1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LanguageId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @(item.Status == Status.Active ? "Active": "InActive")
+                                    </td>
+                                    <td>
+                                        @(item.IsShowOnHome == true ? "Show": "Hide")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SortOrder)
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Sửa", "Edit", new { id = item.Id, languageId = item.LanguageId }) |
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                        @Html.ActionLink("Thêm Ngôn Ngữ Mới", "CreateLanguageOther", new { id = item.Id, languageId = item.LanguageId })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @await Component.InvokeAsync("Paged", Model)
+            }
+            else
+            {
+                <p class="text-center">Không có bản ghi nào</p>
+            }
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
