@@ -129,7 +129,7 @@ namespace ShopDienTu.Application.System.Users
             var query = _userManager.Users;
             if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.UserName.Contains(request.Keyword) 
+                query = query.Where(x => x.UserName.Contains(request.Keyword)
                 || x.PhoneNumber.Contains(request.Keyword) || x.Email.Contains(request.Keyword)
                 || x.FirstName.Contains(request.Keyword) || x.LastName.Contains(request.Keyword));
             }
@@ -213,8 +213,12 @@ namespace ShopDienTu.Application.System.Users
 
         public async Task<ApiResult<bool>> Update(Guid id, UpdateUserRequest request)
         {
-            if (await _userManager.Users.AllAsync(x => x.Email == request.Email && x.Id != id))
+            var emailExits = _userManager.Users.Where(x => x.Email == request.Email && x.Id != id).FirstOrDefault();
+            var userNameExits = _userManager.Users.Where(x => x.UserName == request.UserName && x.Id != id).FirstOrDefault();
+            if (emailExits != null)
                 return new ApiErrorResult<bool>("Email đã tồn tại");
+            if (userNameExits != null)
+                return new ApiErrorResult<bool>("UserName đã tồn tại");
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
                 return new ApiErrorResult<bool>("Tài khoản không tồn tại");
@@ -223,6 +227,7 @@ namespace ShopDienTu.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
+            user.UserName = request.UserName;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

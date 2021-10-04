@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Trang Chủ";
-    var culture = CultureInfo.CurrentCulture.Name;
+    var culture = CultureInfo.CurrentCulture;
 }
 
 @section silder{
@@ -53,7 +53,7 @@
                                         <a href="@url"><img src="@item.ThumbnailImage" alt="@item.Name"></a>
                                         <div class="caption">
                                             <h5>@item.Name</h5>
-                                            <h4><a class="btn" href="@url" localize-content>VIEW</a> <span class="pull-right">$@item.Price.ToString()</span></h4>
+                                            <h4><a class="btn" href="@url" localize-content>VIEW</a> <span class="pull-right">@item.Price.ToString("C", culture)</span></h4>
                                         </div>
                                     </div>
                                 </li>
@@ -83,7 +83,7 @@
                         <h4 style="text-align:center">
                             <a class="btn" href="@url"> <i class="icon-zoom-in"></i></a>
                             <a class="btn btn-add-cart" data-id="@item.Id" href="#"><localize>Add to</localize> <i class="icon-shopping-cart"></i></a>
-                            <a class="btn btn-primary" href="#">$@item.Price.ToString()</a>
+                            <a class="btn btn-primary" href="#">@item.Price.ToString("C",culture)</a>
                         </h4>
                     </div>
                 </div>

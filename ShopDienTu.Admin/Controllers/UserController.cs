@@ -21,7 +21,7 @@ namespace ShopDienTu.Admin.Controllers
             _roleApiClient = roleApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetUserPagingRequest()
             {
@@ -48,7 +48,7 @@ namespace ShopDienTu.Admin.Controllers
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid)
-                return View(ModelState);
+                return View(request);
             var result = await _userApiClient.Register(request);
             if (result.IsSuccessed)
             {
@@ -84,7 +84,8 @@ namespace ShopDienTu.Admin.Controllers
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     PhoneNumber = user.PhoneNumber,
-                    Id = id
+                    Id = id,
+                    UserName = user.UserName
                 };
                 return View(updateRequest);
             }
@@ -95,7 +96,7 @@ namespace ShopDienTu.Admin.Controllers
         public async Task<IActionResult> Update(Guid id, UpdateUserRequest request)
         {
             if (!ModelState.IsValid)
-                return View(ModelState);
+                return View(request);
             var result = await _userApiClient.Update(id, request);
             if (result.IsSuccessed)
             {
@@ -131,7 +132,7 @@ namespace ShopDienTu.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(request);
             }
             var result = await _userApiClient.RoleAssign(request.Id, request);
             if (result.IsSuccessed)

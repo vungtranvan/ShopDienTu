@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
 using ShopDienTu.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FluentValidation;
 
 namespace ShopDienTu.WebApp
 {
@@ -61,6 +62,7 @@ namespace ShopDienTu.WebApp
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddTransient<ISliderApiClient, SliderApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();

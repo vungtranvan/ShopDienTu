@@ -13,8 +13,7 @@ using System.Threading.Tasks;
 
 namespace ShopDienTu.Admin.Controllers
 {
-    [Authorize]
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductApiClient _productApiClient;
         private readonly ILanguageApiClient _languageApiClient;
@@ -63,7 +62,7 @@ namespace ShopDienTu.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Languages = new SelectList((await _languageApiClient.GetAll()).ResultObj, "Id", "Name", 0);
-                return View();
+                return View(request);
             }
 
 

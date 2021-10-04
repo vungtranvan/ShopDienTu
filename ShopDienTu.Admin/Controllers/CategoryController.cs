@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShopDienTu.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         private readonly ILanguageApiClient _languageApiClient;
         private readonly ICategoryApiClient _categoryApiClient;
@@ -54,7 +54,7 @@ namespace ShopDienTu.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Languages = new SelectList((await _languageApiClient.GetAll()).ResultObj, "Id", "Name", 0);
-                return View();
+                return View(request);
             }
 
             var result = await _categoryApiClient.Create(request);

@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ShopDienTu.ApiIntegration\ShopDienTu.ApiIntegration.csproj" />
-    <ProjectReference Include="..\ShopDienTu.Application\ShopDienTu.Application.csproj" />
-    <ProjectReference Include="..\ShopDienTu.Data\ShopDienTu.Data.csproj" />
     <ProjectReference Include="..\ShopDienTu.Utilities\ShopDienTu.Utilities.csproj" />
     <ProjectReference Include="..\ShopDienTu.ViewModels\ShopDienTu.ViewModels.csproj" />
   </ItemGroup>

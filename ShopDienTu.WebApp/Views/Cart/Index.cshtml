@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
-    var culture = CultureInfo.CurrentCulture.Name;
+    var culture = CultureInfo.CurrentCulture;
 }
 @section Scripts{
     <script src="~/js/cart.js"></script>
@@ -11,7 +11,7 @@
 }
 
 <ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="/@culture">Home</a> <span class="divider">/</span></li>
     <li class="active"> SHOPPING CART</li>
 </ul>
 <h3>  SHOPPING CART [ <small><span class="lbl_number_of_items">0</span> Item(s) </small>]<a href="/" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>

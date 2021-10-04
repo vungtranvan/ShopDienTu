@@ -86,8 +86,8 @@ namespace ShopDienTu.WebApp.Controllers
             var result = await _userApiClient.Register(registerRequest);
             if (!result.IsSuccessed)
             {
-                ModelState.AddModelError("", result.Message);
-                return View();
+                ViewData["Error"] = result.Message;
+                return View(registerRequest);
             }
             var loginResult = await _userApiClient.Authenticate(new LoginRequest()
             {

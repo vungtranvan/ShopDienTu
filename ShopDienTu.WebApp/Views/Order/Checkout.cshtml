@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var culture = CultureInfo.CurrentCulture.Name;
+    var culture = CultureInfo.CurrentCulture;
 }
 <ul class="breadcrumb">
     <li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -10,7 +10,7 @@
 </ul>
 <h3>
     SHOPPING CART [ <small>@Model.CartItems.Count Item(s) </small>]
-    <a href="/" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <a href="/@culture" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a>
 </h3>
 <hr class="soft" />
 @if (TempData["ErrorMsg"] != null)
@@ -44,14 +44,14 @@ else
                         <td>
                             @item.Quantity
                         </td>
-                        <td>@item.Price</td>
+                        <td>@item.Price.ToString("C", culture)</td>
                         <td>@(item.Quantity * item.Price)</td>
                     </tr>
                 }
 
                 <tr>
                     <td colspan="4" style="text-align:right"><strong>TOTAL =</strong></td>
-                    <td class="label label-important" style="display:block"> <strong> @Model.CartItems.Sum(x => x.Quantity * x.Price).ToString("N0")</strong></td>
+                    <td class="label label-important" style="display:block"> <strong> @Model.CartItems.Sum(x => x.Quantity * x.Price).ToString("C", culture)</strong></td>
                 </tr>
             </tbody>
         </table>

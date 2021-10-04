@@ -2,7 +2,6 @@
 @model LoginRequest
 
 @{
-    ViewData["Title"] = "Login";
     Layout = null;
 }
 
@@ -42,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    <p><span asp-validation-for="UserName" class="text-danger"></span></p>
                     <div class="input-group mb-3">
                         <input type="password" asp-for="Password" class="form-control" placeholder="Nhập mật khẩu">
                         <div class="input-group-append">
@@ -50,6 +50,7 @@
                             </div>
                         </div>
                     </div>
+                    <p><span asp-validation-for="Password" class="text-danger"></span></p>
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
@@ -68,21 +69,10 @@
                 </form>
 
                 <div class="social-auth-links text-center mt-2 mb-3">
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                    </a>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-                    </a>
+
                 </div>
                 <!-- /.social-auth-links -->
 
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
-                </p>
             </div>
             <!-- /.card-body -->
         </div>
@@ -95,6 +85,7 @@
     <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/assets/dist/js/adminlte.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>
 

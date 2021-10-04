@@ -13,6 +13,7 @@ namespace ShopDienTu.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -23,6 +24,7 @@ namespace ShopDienTu.BackendApi.Controllers
         }
 
         [HttpGet("{productId}/{languageId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int productId, string languageId)
         {
             var product = await _productService.GetById(productId, languageId);
@@ -30,6 +32,7 @@ namespace ShopDienTu.BackendApi.Controllers
         }
 
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetProductPagingRequest request)
         {
             var pro = await _productService.GetAllPaging(request);
@@ -37,6 +40,7 @@ namespace ShopDienTu.BackendApi.Controllers
         }
 
         [HttpGet("paging-categoryid")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPagingByCategoryId([FromQuery] GetProductPagingRequest request)
         {
             var pro = await _productService.GetAllByCategoryId(request);
@@ -103,6 +107,7 @@ namespace ShopDienTu.BackendApi.Controllers
         }
 
         [HttpPatch("{productId}/viewCount")]
+        [AllowAnonymous]
         public async Task<IActionResult> AddViewCount(int productId)
         {
             var result = await _productService.AddViewcount(productId);
@@ -165,7 +170,6 @@ namespace ShopDienTu.BackendApi.Controllers
             return Ok(image);
         }
         [HttpPut("{id}/categories")]
-        [Authorize]
         public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
         {
             if (!ModelState.IsValid)

@@ -40,7 +40,7 @@ namespace ShopDienTu.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                return View(request);
             }
 
             var result = await _userApiClient.Authenticate(request);
@@ -50,6 +50,14 @@ namespace ShopDienTu.Admin.Controllers
                 return View();
             }
             var userPrincipal = this.ValidateToken(result.ResultObj);
+
+            var role = userPrincipal.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (role == null || role != "admin")
+            {
+                ModelState.AddModelError("", "Bạn ko có quyền truy cập vào đây !!!");
+                return View();
+            }
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
